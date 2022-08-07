@@ -8,7 +8,6 @@ namespace E2PProductBankAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles="admin")]
     public class ProductsController : ControllerBase
     {
         IProductService _productService;
@@ -40,8 +39,9 @@ namespace E2PProductBankAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("add")]
-        public IActionResult Add(Product product)
+        [HttpPost]
+        [Route("addproduct")]
+        public IActionResult AddProduct(Product product)
         {
             var result = _productService.Add(product);
             if (result.Success)
@@ -62,6 +62,17 @@ namespace E2PProductBankAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("getproductdetailbyid")]
+        public IActionResult GetProductDetailById(int productId)
+        {
+            var result = _productService.GetProductDetailDto(productId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
 
         
     }

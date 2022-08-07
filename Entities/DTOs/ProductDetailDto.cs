@@ -11,7 +11,7 @@ namespace Entities.DTOs
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public string CategoryName { get; set; }
-        
+        public string CommentText { get; set; }
+        public string Username { get; set; }
     }
 }

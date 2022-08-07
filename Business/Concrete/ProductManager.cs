@@ -48,11 +48,11 @@ namespace Business.Concrete
 
         public IDataResult<Product> GetById(int productId)
         {
-            return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId), "Ürün listelendi.");
+            return new SuccessDataResult<Product>(_productDal.Get(p => p.Id == productId), "Ürün listelendi.");
         }
-        public IDataResult<List<ProductDetailDto>> GetProductDetailDto()
+        public IDataResult<List<ProductDetailDto>> GetProductDetailDto(int productId)
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetail(), "Ürün detayı listelendi.");
+            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetail(productId), "Ürün detayı listelendi.");
         }
 
         public IResult Update(Product product)

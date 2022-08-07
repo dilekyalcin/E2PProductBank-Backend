@@ -17,7 +17,7 @@ namespace Core.Entities.Concrete
         public byte[] PasswordSalt { get; set; }
         public string Username { get; set; }
         public string Country { get; set; }
-        public int PhoneNumber { get; set; }
+        public string Phone { get; set; }
         public bool Status { get; set; } 
 
     }

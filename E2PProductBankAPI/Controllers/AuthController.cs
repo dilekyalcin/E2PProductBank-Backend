@@ -24,9 +24,9 @@ namespace E2PProductBankAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto request, string password)
+        public async Task<ActionResult<User>> Register(UserDto request)
         {
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var user = new User
             {
                 Email = request.Email,
@@ -36,6 +36,8 @@ namespace E2PProductBankAPI.Controllers
                 Lastname = request.Lastname,
                 Username = request.Username,
                 Country = request.Country,
+                Phone = request.Phone,
+                Status = request.Status
             };
             _userService.Add(user);
             return Ok(user);

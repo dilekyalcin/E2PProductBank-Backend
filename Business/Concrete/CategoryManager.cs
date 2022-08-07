@@ -20,6 +20,16 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+        public IResult Add(Category category)
+        {
+            if (CheckCategoryName(category.CategoryName).Success)
+            {
+                _categoryDal.Add(category);
+                return new SuccessResult(Messages.CategoryAdded);
+            }
+            return new ErrorResult();
+        }
+
         public IDataResult<List<Category>> GetAll()
         {
             return new SuccessDataResult<List<Category>>(_categoryDal.GetAll(), Messages.CategoryAdded);
@@ -27,7 +37,16 @@ namespace Business.Concrete
 
         public IDataResult<Category> GetById(int categoryId)
         {
-            return new SuccessDataResult<Category>(_categoryDal.Get(c => c.CategoryId == categoryId), Messages.GetCategoryById);
+            return new SuccessDataResult<Category>(_categoryDal.Get(c => c.Id == categoryId), Messages.GetCategoryById);
+        }
+        private IResult CheckCategoryName(string categoryName)
+        {
+            var result = _categoryDal.GetAll(c => c.CategoryName.Equals(categoryName)).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.CategoryNameAlreadyExist);
+            }
+            return new SuccessResult();
         }
     }
 }

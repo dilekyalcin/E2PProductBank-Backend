@@ -2,26 +2,19 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfProductDal : EfEntityRepositoryBase<Product, E2PContext>, IProductDal
     {
-        public List<ProductDetailDto> GetProductDetail()
+        public List<ProductDetailDto> GetProductDetail(int productId)
         {
             using (E2PContext context = new E2PContext())
             {
                 var result = from p in context.Products
-                             join c in context.Categories
-                             on p.CategoryId equals c.CategoryId
-                             select new ProductDetailDto { ProductId = p.ProductId, ProductName=p.ProductName, CategoryName=c.CategoryName };
+                             join d in context.Comments on productId equals d.ProductId
+                             join u in context.Users on d.UserId equals u.Id
+                             select new ProductDetailDto { ProductId = productId, ProductName=p.ProductName, CommentText= d.CommentText, Username = u.Username };
 
                 return result.ToList();
             }
