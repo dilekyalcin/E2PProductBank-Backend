@@ -50,5 +50,17 @@ namespace E2PProductBankAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet]
+        [Route("getcategorydetail")]
+        public IActionResult GetCategoryDetail(int categoryId)
+        {
+            var result = _categoryService.GetCategoryDetailDto(categoryId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

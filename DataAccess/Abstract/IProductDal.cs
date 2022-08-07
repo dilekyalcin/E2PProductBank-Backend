@@ -12,5 +12,7 @@ namespace DataAccess.Abstract
     public interface IProductDal:IEntityRepository<Product>
     {
         List<ProductDetailDto> GetProductDetail(int productId);
+
+        List<Product> GetProductsFromCategoryId(int categoryId);
     }
 }

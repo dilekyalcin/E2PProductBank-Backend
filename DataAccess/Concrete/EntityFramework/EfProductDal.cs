@@ -19,5 +19,14 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+
+        public List<Product> GetProductsFromCategoryId(int categoryId)
+        {
+                using (E2PContext context = new E2PContext())
+                {
+                    var result = context.Products.Where(p => p.Id == categoryId).ToList();
+                    return result;
+                }
+        }
     }
 }

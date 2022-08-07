@@ -18,6 +18,7 @@ namespace Business.Constants
         public static string CategoryAdded = "Kategori eklendi.";
         public static string GetCategoryById = "Kategori getirildi.";
         public static string CategoryNameAlreadyExist = "Aynı isim de kategori eklenemez.";
+        public static string ProductsListedByCategoryId = "Kategoriye göre ürünler listelendi.";
         public static string UserAdded = "Kullanıcı eklendi.";
         public static string UserGetById = "Kullanıcı listelendi.";
 

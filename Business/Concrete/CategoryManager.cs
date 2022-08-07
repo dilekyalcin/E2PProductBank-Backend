@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,12 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Category>(_categoryDal.Get(c => c.Id == categoryId), Messages.GetCategoryById);
         }
+
+        public IDataResult<List<CategoryDetailDto>> GetCategoryDetailDto(int categoryId)
+        {
+            return new SuccessDataResult<List<CategoryDetailDto>>(_categoryDal.GetCategoryDetail(categoryId), Messages.ProductsListedByCategoryId);
+        }
+
         private IResult CheckCategoryName(string categoryName)
         {
             var result = _categoryDal.GetAll(c => c.CategoryName.Equals(categoryName)).Any();
