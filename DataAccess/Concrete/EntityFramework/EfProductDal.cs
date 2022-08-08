@@ -14,6 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from p in context.Products
                              join d in context.Comments on productId equals d.ProductId
                              join u in context.Users on d.UserId equals u.Id
+                             where p.Id == productId
                              select new ProductDetailDto { ProductId = productId, ProductName=p.ProductName, CommentText= d.CommentText, Username = u.Username };
 
                 return result.ToList();

@@ -70,10 +70,5 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-
-        public IDataResult<List<Product>> GetProductsFromCategoryId(int categoryId)
-        {
-            return new SuccessDataResult<List<Product>>(_productDal.GetProductsFromCategoryId(categoryId), "Ürünler kategoriye göre listelendi.");
-        }
     }
 }

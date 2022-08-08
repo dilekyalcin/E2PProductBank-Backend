@@ -17,7 +17,8 @@ namespace E2PProductBankAPI.Controllers
             _productService = productService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
+        [Route("getall")]
         public IActionResult GetAll()
         {
             var result = _productService.GetAll();

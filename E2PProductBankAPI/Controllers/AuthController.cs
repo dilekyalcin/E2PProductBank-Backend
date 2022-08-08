@@ -23,8 +23,9 @@ namespace E2PProductBankAPI.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto request)
+        [HttpPost]
+        [Route("register")]
+        public IActionResult Register(UserRegisterDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             var user = new User
@@ -39,13 +40,18 @@ namespace E2PProductBankAPI.Controllers
                 Phone = request.Phone,
                 Status = request.Status
             };
-            _userService.Add(user);
-            return Ok(user);
+            var result = _userService.Add(user);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
 
-        [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(UserDto request)
+        [HttpPost]
+        [Route("login")]
+        public IActionResult Login(UserLoginDto request)
         {
             var userToCheck = _userService.GetByMail(request.Email);
             if (userToCheck == null)
