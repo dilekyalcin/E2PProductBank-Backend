@@ -15,6 +15,7 @@ namespace Core.DataAccess.EntityFramework
     {
         public void Add(TEntity entity)
         {
+            Console.WriteLine("buraya geldi");
             using (TContext context = new TContext())
             {
                 var addedEntity = context.Entry(entity);

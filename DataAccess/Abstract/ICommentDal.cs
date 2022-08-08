@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface ICommentDal:IEntityRepository<Comment>
+    public interface ICommentDal
     {
-
+        void AddComment(int productId, int userId, Comment comment);
+        List<Comment> GetComments();
     }
 }

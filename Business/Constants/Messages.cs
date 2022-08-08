@@ -21,6 +21,7 @@ namespace Business.Constants
         public static string ProductsListedByCategoryId = "Kategoriye göre ürünler listelendi.";
         public static string UserAdded = "Kullanıcı eklendi.";
         public static string UserGetById = "Kullanıcı listelendi.";
-
+        public static string CommentAdded = "Yorum eklendi.";
+        public static string CommentsListed = "Yorumlar listelendi.";
     }
 }

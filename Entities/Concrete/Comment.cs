@@ -9,7 +9,7 @@ namespace Entities.Concrete
 {
     public class Comment:IEntity
     {
-        public int CommentId { get; set; }
+        public int Id { get; set; }
         public string CommentText { get; set; }
         public int ProductId { get; set; }
         public int UserId { get; set; }
