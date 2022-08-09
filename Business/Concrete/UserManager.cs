@@ -16,6 +16,11 @@ namespace Business.Concrete
     public class UserManager : IUserService
     {
         IUserDal _userDal;
+
+        public UserManager(IUserDal userDal)
+        {
+            _userDal = userDal;
+        }
         public IResult Add(User user)
         {
             ValidationTool.Validate(new UserValidator(), user);
@@ -32,7 +37,8 @@ namespace Business.Concrete
 
         public User GetByMail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            var result = _userDal.Get(u => u.Email == email);
+            return result;
         }
     }
 }

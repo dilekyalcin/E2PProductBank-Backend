@@ -58,6 +58,7 @@ namespace E2PProductBankAPI.Controllers
             {
                 return BadRequest("User not found");
             }
+            return Ok(userToCheck);
 
             if(!VerifyPasswordHash(request.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {

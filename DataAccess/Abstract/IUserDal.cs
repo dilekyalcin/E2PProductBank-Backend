@@ -10,6 +10,5 @@ namespace DataAccess.Abstract
 {
     public interface IUserDal:IEntityRepository<User>
     {
-        User GetUserByMail(string email);
     }
 }

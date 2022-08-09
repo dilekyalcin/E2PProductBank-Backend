@@ -29,7 +29,7 @@ namespace E2PProductBankAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyid")]
+        /*[HttpGet("getbyid")]
         public IActionResult GetById(int id)
         {
             var result = _productService.GetById(id);
@@ -38,7 +38,7 @@ namespace E2PProductBankAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
-        }
+        }*/
 
         [HttpPost]
         [Route("addproduct")]
