@@ -54,20 +54,21 @@ namespace E2PProductBankAPI.Controllers
         public IActionResult Login(UserLoginDto request)
         {
             var userToCheck = _userService.GetByMail(request.Email);
+            string message = "";
             if (userToCheck == null)
             {
                 return BadRequest("User not found");
             }
-            return Ok(userToCheck);
 
             if(!VerifyPasswordHash(request.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return BadRequest("Şifre yanlış");
+                message = "Kullanıcı adınız veya şifreniz yanlış.";
+                return BadRequest(message);
             }
 
             string token = CreateToken(userToCheck);
-
-            return Ok(token);
+            
+            return Ok(new { userToCheck, token });
         }
 
 
@@ -76,8 +77,7 @@ namespace E2PProductBankAPI.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Firstname + " " + user.Lastname),
-
-                new Claim(ClaimTypes.Role, "admin")
+                new Claim(ClaimTypes.Role, "User")
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("TokenOptions:SecurityKey").Value));
 
@@ -105,16 +105,17 @@ namespace E2PProductBankAPI.Controllers
         {
             using (var hmac = new HMACSHA512(passwordSalt))
             {
+                //var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+                //for (int i = 0; i < computedHash.Length; i++)
+                //{
+                //    if (computedHash[i] != passwordHash[i])
+                //    {
+                //        return false;
+                //    }
+                //}
                 var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != passwordHash[i])
-                    {
-                        return false;
-                    }
-                }
+                return computedHash.SequenceEqual(passwordHash);
             }
-                return true;
         }
     }
 }

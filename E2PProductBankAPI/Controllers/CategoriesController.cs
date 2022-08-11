@@ -53,9 +53,9 @@ namespace E2PProductBankAPI.Controllers
 
         [HttpGet]
         [Route("getcategorydetail")]
-        public IActionResult GetCategoryDetail(int categoryId)
+        public IActionResult GetCategoryDetail(int id)
         {
-            var result = _categoryService.GetCategoryDetailDto(categoryId);
+            var result = _categoryService.GetCategoryDetailDto(id);
             if (result.Success)
             {
                 return Ok(result);

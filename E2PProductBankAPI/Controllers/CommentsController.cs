@@ -18,9 +18,11 @@ namespace E2PProductBankAPI.Controllers
 
         [HttpPost]
         [Route("addcomment")]
-        public IActionResult AddComment(int productId, int userId, Comment comment)
+        public IActionResult AddComment(int productId, int userId, string commentText)
         {
-            var result = _commentService.AddComment(productId, userId, comment);
+            var comment = new Comment { ProductId = productId, UserId = userId, CommentText = commentText };  
+
+            var result = _commentService.Add(comment);
             if (result.Success)
             {
                 return Ok(result);
@@ -40,6 +42,19 @@ namespace E2PProductBankAPI.Controllers
             }
 
             return BadRequest(result);
+        }
+
+        [HttpGet("product/{productId}")]
+        public IActionResult GetByProductId(int productId)
+        {
+            var result = _commentService.GetByProductId(productId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+
         }
     }
 }

@@ -9,25 +9,51 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public List<ProductDetailDto> GetProductDetail(int productId)
         {
+            //ProductDetailDto pDetail = new ProductDetailDto();
+
             using (E2PContext context = new E2PContext())
             {
-                var result = from p in context.Products
-                             join d in context.Comments on productId equals d.ProductId
-                             join u in context.Users on d.UserId equals u.Id
-                             where p.Id == productId
-                             select new ProductDetailDto { ProductId = productId, ProductName=p.ProductName, CommentText= d.CommentText, Username = u.Username };
+                IQueryable<ProductDetailDto> pDetail = from p in context.Products
+                              join d in context.Comments on productId equals d.ProductId
+                              where p.Id == productId
+                              select new ProductDetailDto { 
+                                  ProductId = productId, 
+                                  ProductName = p.ProductName, 
+                                  ProductVendor = p.ProductVendor, 
+                                  ProductDescription = p.ProductDescription, 
+                                  CommentText = d.CommentText,
+                                  UserId = d.UserId,
+                              };
 
-                return result.ToList();
+
+                return pDetail.ToList();
             }
         }
 
+        
+
         public List<Product> GetProductsFromCategoryId(int categoryId)
         {
-                using (E2PContext context = new E2PContext())
+            using (E2PContext context = new E2PContext())
+            {
+                var result = context.Products.Where(p => p.Id == categoryId).ToList();
+                return result;
+            }
+        }
+
+        public bool DeleteProduct(int productId)
+        {
+            using (E2PContext context = new E2PContext())
+            {
+                var product = context.Products.Where(p => p.Id == productId).FirstOrDefault();
+                if (product != null)
                 {
-                    var result = context.Products.Where(p => p.Id == categoryId).ToList();
-                    return result;
+                    context.Products.Remove(product);
+                    context.SaveChanges();
+                    return true;
                 }
+                return false;
+            }
         }
     }
 }

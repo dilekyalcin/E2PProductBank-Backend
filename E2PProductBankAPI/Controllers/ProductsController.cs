@@ -11,10 +11,11 @@ namespace E2PProductBankAPI.Controllers
     public class ProductsController : ControllerBase
     {
         IProductService _productService;
-
-        public ProductsController(IProductService productService)
+        IWebHostEnvironment _environment;
+        public ProductsController(IWebHostEnvironment environment, IProductService productService)
         {
             _productService = productService;
+            _environment = environment;
         }
 
         [HttpGet]
@@ -29,7 +30,7 @@ namespace E2PProductBankAPI.Controllers
             return BadRequest(result);
         }
 
-        /*[HttpGet("getbyid")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             var result = _productService.GetById(id);
@@ -38,18 +39,27 @@ namespace E2PProductBankAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
-        }*/
+        }
+
 
         [HttpPost]
         [Route("addproduct")]
         public IActionResult AddProduct(Product product)
         {
-            var result = _productService.Add(product);
-            if (result.Success)
+            try
             {
-                return Ok(result);
+                var result = _productService.Add(product);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
             }
-            return BadRequest(result);
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+            return BadRequest();
         }
 
         [HttpPut("update")]
@@ -63,8 +73,8 @@ namespace E2PProductBankAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getproductdetailbyid")]
-        public IActionResult GetProductDetailById(int productId)
+        [HttpGet("productdetail")]
+        public IActionResult GetProductDetail(int productId)
         {
             var result = _productService.GetProductDetailDto(productId);
             if (result.Success)
@@ -74,6 +84,17 @@ namespace E2PProductBankAPI.Controllers
 
             return BadRequest(result);
         }
-        
+
+        [HttpDelete]
+        public IActionResult Delete(int productId)
+        {
+            var result = _productService.DeleteProduct(productId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

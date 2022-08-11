@@ -70,5 +70,16 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
+
+        public IResult DeleteProduct(int productId)
+        {
+            var result = _productDal.DeleteProduct(productId);
+            if (result)
+            {
+               return new SuccessResult(Messages.ProductDeleted);
+
+            }
+            return new ErrorResult("Ürün silinemedi!!!!!");
+        }
     }
 }

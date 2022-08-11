@@ -14,5 +14,7 @@ namespace DataAccess.Abstract
         List<ProductDetailDto> GetProductDetail(int productId);
 
         List<Product> GetProductsFromCategoryId(int categoryId);
+
+        bool DeleteProduct(int productId);
     }
 }

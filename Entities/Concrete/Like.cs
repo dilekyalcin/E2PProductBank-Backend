@@ -11,5 +11,7 @@ namespace Entities.Concrete
     {
         public int LikeId { get; set; }
         public int LikeCount { get; set; }
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
