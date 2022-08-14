@@ -71,6 +71,20 @@ namespace E2PProductBankAPI.Controllers
             return Ok(new { userToCheck, token });
         }
 
+        [HttpGet]
+        public User GetById(int userId)
+        {
+            var result = _userService.GetById(userId);
+            return result;
+        }
+        
+        [HttpGet]
+        [Route("/comments/{userId}")]
+        public IActionResult GetCommentsUser(int userId)
+        {
+            var result = _userService.GetCommentsUser(userId);
+            return Ok(result);
+        }
 
         private string CreateToken(User user)
         {

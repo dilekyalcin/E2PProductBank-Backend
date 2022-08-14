@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Entities.Concrete
@@ -17,12 +18,8 @@ namespace Entities.Concrete
         public string ProductVendor { get; set; }
         public string ProductDescription { get; set; }
         public string ProductImage { get; set; }
-        public virtual Category Category { get; set; }
+        //public virtual Category Category { get; set; }
 
 
-    }
-    public class DummyProduct
-    {
-        public string ProductName { get; set; }
     }
 }

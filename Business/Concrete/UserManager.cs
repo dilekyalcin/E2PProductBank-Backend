@@ -5,6 +5,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,10 +36,23 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(Messages.UserGetById);
         }
 
+        public User GetById(int userId)
+        {
+            var result = _userDal.Get(u => u.Id == userId);
+            return result;
+        }
+
         public User GetByMail(string email)
         {
             var result = _userDal.Get(u => u.Email == email);
             return result;
+        }
+
+        public IDataResult<List<Comment>> GetCommentsUser(int userId)
+        {
+            var result = _userDal.GetCommentsUser(userId);
+            return new SuccessDataResult<List<Comment>>("Yorumlar getirildi.");
+
         }
     }
 }

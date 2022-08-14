@@ -2,11 +2,22 @@
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.DTOs;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, E2PContext>, IUserDal
     {
-        
+        public List<UserCommentsDto> GetCommentsUser(int userId)
+        {
+            using (E2PContext context = new E2PContext())
+            {
+                var result = from u in context.Users
+                             join c in context.Comments on u.Id equals c.UserId
+                             select new UserCommentsDto { Comment = c.CommentText };
+                return result.ToList();
+                             
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace Entities.DTOs
         public string CategoryName { get; set; }
         public string ProductName { get; set; }
         public string ProductVendor { get; set; }
+        //public byte[] ProductImage { get; set; }
         public string ProductDescription { get; set; }
     }
 }

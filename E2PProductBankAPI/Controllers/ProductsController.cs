@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,11 +13,10 @@ namespace E2PProductBankAPI.Controllers
     public class ProductsController : ControllerBase
     {
         IProductService _productService;
-        IWebHostEnvironment _environment;
-        public ProductsController(IWebHostEnvironment environment, IProductService productService)
+        
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
-            _environment = environment;
         }
 
         [HttpGet]
@@ -43,23 +44,23 @@ namespace E2PProductBankAPI.Controllers
 
 
         [HttpPost]
-        [Route("addproduct")]
-        public IActionResult AddProduct(Product product)
+        public IActionResult Add(Product request)
         {
-            try
+            //ValidationTool.Validate(new ProductValidator(), product);
+            Product product = new Product
             {
-                var result = _productService.Add(product);
-                if (result.Success)
-                {
-                    return Ok(result);
-                }
-                return BadRequest(result);
-            }
-            catch (Exception)
+                ProductName = request.ProductName,
+                ProductVendor = request.ProductVendor,
+                ProductDescription = request.ProductDescription,
+                ProductImage = request.ProductImage,
+                CategoryId = request.CategoryId,
+            };
+            var result = _productService.Add(product);
+            if (result.Success)
             {
-                throw new Exception();
+                return Ok(result);
             }
-            return BadRequest();
+            return BadRequest(result);
         }
 
         [HttpPut("update")]
