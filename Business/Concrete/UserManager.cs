@@ -6,6 +6,7 @@ using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,10 +49,9 @@ namespace Business.Concrete
             return result;
         }
 
-        public IDataResult<List<Comment>> GetCommentsUser(int userId)
+        public IDataResult<List<UserCommentsDto>> GetCommentsUser(int userId)
         {
-            var result = _userDal.GetCommentsUser(userId);
-            return new SuccessDataResult<List<Comment>>("Yorumlar getirildi.");
+            return new SuccessDataResult<List<UserCommentsDto>>(_userDal.GetCommentsUser(userId), "Yorumlar getirildi.");
 
         }
     }

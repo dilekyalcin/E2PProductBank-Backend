@@ -18,6 +18,12 @@ namespace Entities.Concrete
         public string ProductVendor { get; set; }
         public string ProductDescription { get; set; }
         public string ProductImage { get; set; }
+
+        [NotMapped]
+        public string ProductImageSrc { get; set; }
+        [NotMapped]
+        public IFormFile ProductImageFile { get; set; }
+       
         //public virtual Category Category { get; set; }
 
 

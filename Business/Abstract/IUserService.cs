@@ -1,6 +1,7 @@
 ﻿using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Business.Abstract
         IDataResult<User> Get(int id);
         User GetByMail(string email);
         User GetById(int userId);
-
-        IDataResult<List<Comment>> GetCommentsUser(int userId);
+        
+        IDataResult<List<UserCommentsDto>> GetCommentsUser(int userId);
     }
 }

@@ -81,5 +81,10 @@ namespace Business.Concrete
             }
             return new ErrorResult("Ürün silinemedi!!!!!");
         }
+
+        public IDataResult<List<Product>> GetProducts()
+        {
+            return new SuccessDataResult<List<Product>>(_productDal.GetProducts(), "ürünler");
+        }
     }
 }

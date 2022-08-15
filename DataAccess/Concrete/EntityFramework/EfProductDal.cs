@@ -55,5 +55,23 @@ namespace DataAccess.Concrete.EntityFramework
                 return false;
             }
         }
+
+        public List<Product> GetProducts()
+        {
+            using (E2PContext context = new E2PContext())
+            {
+                var result = context.Products.Select(p => new Product()
+                {
+                    Id = p.Id,
+                    ProductName = p.ProductName,
+                    ProductVendor = p.ProductVendor,
+                    ProductDescription = p.ProductDescription,
+                    CategoryId = p.CategoryId,
+                    ProductImage = p.ProductImage,
+                    ProductImageSrc = "https://localhost:7182/Images/" + p.ProductImage,
+                });
+                return result.ToList();
+            }
+        }
     }
 }
