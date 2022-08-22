@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(E2PContext))]
-    [Migration("20220811114228_test2")]
-    partial class test2
+    [Migration("20220822141403_UpdateProduct")]
+    partial class UpdateProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -122,15 +122,13 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeId"), 1L, 1);
 
-                    b.Property<int>("LikeCount")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("LikeId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ProductId");
+                    b.HasKey("LikeId");
 
                     b.ToTable("Likes");
                 });
@@ -144,6 +142,9 @@ namespace DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductDescription")
@@ -164,8 +165,6 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
                 });
 
@@ -178,28 +177,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Like", b =>
-                {
-                    b.HasOne("Entities.Concrete.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Product", b =>
-                {
-                    b.HasOne("Entities.Concrete.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

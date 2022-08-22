@@ -18,5 +18,7 @@ namespace Business.Abstract
         User GetById(int userId);
         
         IDataResult<List<UserCommentsDto>> GetCommentsUser(int userId);
+
+        IDataResult<List<UserLikesDto>> GetLikesUser(int userId);
     }
 }

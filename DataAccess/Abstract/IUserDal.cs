@@ -12,5 +12,7 @@ namespace DataAccess.Abstract
     public interface IUserDal:IEntityRepository<User>
     {
         List<UserCommentsDto> GetCommentsUser(int userId);
+        List<UserLikesDto> GetLikesUser(int userId);
+
     }
 }

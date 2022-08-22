@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface ILikeDal : IEntityRepository<Like>
     {
+        List<Like> LikeProduct(Like like);
     }
 }

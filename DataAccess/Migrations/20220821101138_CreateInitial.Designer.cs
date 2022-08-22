@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(E2PContext))]
-    [Migration("20220811201240_UpdateProduct")]
-    partial class UpdateProduct
+    [Migration("20220821101138_CreateInitial")]
+    partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,6 +128,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("LikeId");
 
                     b.HasIndex("ProductId");
@@ -164,8 +167,6 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
                 });
 
@@ -189,17 +190,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Product", b =>
-                {
-                    b.HasOne("Entities.Concrete.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

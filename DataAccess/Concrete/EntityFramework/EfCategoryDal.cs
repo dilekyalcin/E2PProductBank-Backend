@@ -21,7 +21,7 @@ namespace DataAccess.Concrete.EntityFramework
                  var result = from c in context.Categories
                               join p in context.Products on categoryId equals p.CategoryId
                               where c.Id == categoryId
-                              select new CategoryDetailDto { CategoryId = categoryId, ProductId = p.Id, ProductName = p.ProductName, ProductVendor = p.ProductVendor, ProductDescription = p.ProductDescription, CategoryName = c.CategoryName};
+                              select new CategoryDetailDto { CategoryId = categoryId, ProductId = p.Id, ProductName = p.ProductName, ProductVendor = p.ProductVendor, ProductImage = p.ProductImage, ProductDescription = p.ProductDescription, CategoryName = c.CategoryName};
                 return result.ToList();
                 
             }

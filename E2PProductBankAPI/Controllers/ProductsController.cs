@@ -49,27 +49,18 @@ namespace E2PProductBankAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromForm]Product request)
         {
-            //Product product = new Product
-            //{
-            //    ProductName = request.ProductName,
-            //    ProductVendor = request.ProductVendor,
-            //    ProductDescription = request.ProductDescription,
-            //    ProductImage = await SaveImage(request.ProductImageFile),
-            //    ProductImageSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, request.ProductImage),
-            //    CategoryId = request.CategoryId,
-            //};
 
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "images");
 
-            var path = Path.Combine(@"C:\Users\Monster\Desktop\C#\E2PProductBank\Images", request.ProductImageFile.FileName);
-            if ((!Directory.Exists(path)))
+            if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
 
-            using (FileStream fs = new FileStream(path, FileMode.Create))
+            var fullFileName = Path.Combine(path,request.ProductImageFile.FileName);
+            using (var fs = new FileStream(fullFileName, FileMode.Create))
             {
                 await request.ProductImageFile.CopyToAsync(fs);
-                fs.Close();
             }
 
             Product product = new Product
@@ -77,8 +68,7 @@ namespace E2PProductBankAPI.Controllers
                 ProductName = request.ProductName,
                 ProductVendor = request.ProductVendor,
                 ProductDescription = request.ProductDescription,
-                ProductImage = request.ProductImage,
-                ProductImageSrc = request.ProductImageSrc,
+                ProductImage = request.ProductImageFile.FileName,
                 CategoryId = request.CategoryId,
             };
             ValidationTool.Validate(new ProductValidator(), product);
@@ -101,17 +91,18 @@ namespace E2PProductBankAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("productdetail")]
-        public IActionResult GetProductDetail(int productId)
-        {
-            var result = _productService.GetProductDetailDto(productId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+        //[HttpGet]
+        //[Route("/productdetail/{productId}")]
+        //public IActionResult GetProductDetail(int productId)
+        //{
+        //    var result = _productService.GetProductDetailDto(productId);
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
 
-            return BadRequest(result);
-        }
+        //    return BadRequest(result);
+        //}
 
         [HttpDelete]
         public IActionResult Delete(int productId)
@@ -123,28 +114,5 @@ namespace E2PProductBankAPI.Controllers
             }
             return BadRequest(result);
         }
-
-        private string GetFilePath(string productImage)
-        {
-            return this._webHostEnvironment.WebRootPath + "\\Uploads\\" + productImage;
-        }
-
-        private string GetImageByProdut(string productImage)
-        {
-            string ImageUrl = "";
-            string HostUrl = "https://localhost:7182/";
-            string Filepath = GetFilePath(productImage);
-            string Imagepath = Filepath;
-            if (!System.IO.File.Exists(Imagepath))
-            {
-                ImageUrl = HostUrl + "/uploads/noimage.png";
-            }
-            else
-            {
-                ImageUrl = HostUrl + "/uploads/" + productImage;
-            }
-            return ImageUrl;
-        }
-
     }
 }

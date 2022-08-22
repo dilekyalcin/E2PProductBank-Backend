@@ -83,7 +83,23 @@ namespace E2PProductBankAPI.Controllers
         public IActionResult GetCommentsUser(int userId)
         {
             var result = _userService.GetCommentsUser(userId);
-            return Ok(result);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("/likes/{userId}")]
+        public IActionResult GetLikesUser(int userId)
+        {
+            var result = _userService.GetLikesUser(userId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         private string CreateToken(User user)

@@ -54,5 +54,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<UserCommentsDto>>(_userDal.GetCommentsUser(userId), "Yorumlar getirildi.");
 
         }
+
+        public IDataResult<List<UserLikesDto>> GetLikesUser(int userId)
+        {
+            return new SuccessDataResult<List<UserLikesDto>>(_userDal.GetLikesUser(userId), "Yorumlar getirildi.");
+        }
     }
 }

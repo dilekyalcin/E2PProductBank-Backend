@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs
 {
-    public class UserCommentsDto : IDto
+    public class UserLikesDto:IDto
     {
         public Product Product { get; set; }
-        public string Comment { get; set; }
-
+        public Like Like { get; set; }
 
     }
 }

@@ -27,6 +27,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
+            builder.RegisterType<LikeManager>().As<ILikeService>().SingleInstance();
+            builder.RegisterType<EfLikeDal>().As<ILikeDal>().SingleInstance();
+
         }
     }
 }

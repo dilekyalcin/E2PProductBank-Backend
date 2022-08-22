@@ -15,6 +15,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 IQueryable<ProductDetailDto> pDetail = from p in context.Products
                               join d in context.Comments on productId equals d.ProductId
+                              join l in context.Likes on productId equals l.ProductId
                               where p.Id == productId
                               select new ProductDetailDto { 
                                   ProductId = productId, 
@@ -23,6 +24,7 @@ namespace DataAccess.Concrete.EntityFramework
                                   ProductDescription = p.ProductDescription, 
                                   CommentText = d.CommentText,
                                   UserId = d.UserId,
+                                  Like = l
                               };
 
 
@@ -68,7 +70,6 @@ namespace DataAccess.Concrete.EntityFramework
                     ProductDescription = p.ProductDescription,
                     CategoryId = p.CategoryId,
                     ProductImage = p.ProductImage,
-                    ProductImageSrc = "https://localhost:7182/Images/" + p.ProductImage,
                 });
                 return result.ToList();
             }

@@ -21,5 +21,18 @@ namespace DataAccess.Concrete.EntityFramework
                              
             }
         }
+
+        public List<UserLikesDto> GetLikesUser(int userId)
+        {
+            using (E2PContext context = new E2PContext())
+            {
+                var result = from u in context.Users
+                             join l in context.Likes on u.Id equals l.UserId
+                             join p in context.Products on l.ProductId equals p.Id
+                             where u.Id == userId
+                             select new UserLikesDto { Product = p, Like = l };
+                return result.ToList();
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@
 
 namespace DataAccess.Migrations
 {
-    public partial class UpdateProduct : Migration
+    public partial class AddedProductDetailLikeRelationship : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

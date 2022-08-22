@@ -14,6 +14,7 @@ namespace Entities.DTOs
         public string ProductName { get; set; }
         public string ProductVendor { get; set; }
         //public byte[] ProductImage { get; set; }
+        public string ProductImage { get; set; }
         public string ProductDescription { get; set; }
     }
 }
