@@ -19,6 +19,15 @@ namespace DataAccess.Concrete.EntityFramework
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=DenemeDb;Trusted_Connection=true");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Like>()
+                .HasIndex(l => new { l.UserId, l.ProductId })
+                .IsUnique(true);
+            modelBuilder.Entity<Comment>()
+                .HasIndex(c => new { c.UserId, c.ProductId })
+                .IsUnique(true);
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }

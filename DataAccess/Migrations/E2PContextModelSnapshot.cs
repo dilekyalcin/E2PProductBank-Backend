@@ -109,6 +109,9 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
+                    b.HasIndex("UserId", "ProductId")
+                        .IsUnique();
+
                     b.ToTable("Comments");
                 });
 
@@ -127,6 +130,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("LikeId");
+
+                    b.HasIndex("UserId", "ProductId")
+                        .IsUnique();
 
                     b.ToTable("Likes");
                 });

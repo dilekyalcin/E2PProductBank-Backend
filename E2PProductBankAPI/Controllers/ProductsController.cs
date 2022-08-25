@@ -81,14 +81,42 @@ namespace E2PProductBankAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult Update(Product product)
+        public async Task<IActionResult> Update([FromForm]Product request)
         {
-            var result = _productService.Update(product);
-            if (result.Success)
+            var path = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+            if (request.ProductImageFile.Length < 0)
             {
-                return Ok(result);
+                return BadRequest("Fotoğraf ekleyiniz!");
             }
-            return BadRequest(result);
+            else
+            {
+                var fullFileName = Path.Combine(path, request.ProductImageFile.FileName);
+                using (var fs = new FileStream(fullFileName, FileMode.Create))
+                {
+                    await request.ProductImageFile.CopyToAsync(fs);
+                }
+                ValidationTool.Validate(new ProductValidator(), request);
+                Product product = _productService.GetProduct(request.Id);
+                Console.WriteLine(product);
+                product.ProductName = request.ProductName;
+                product.ProductDescription = request.ProductDescription;
+                product.CategoryId = request.CategoryId;
+                product.ProductVendor  = request.ProductVendor;
+                product.ProductImage = request.ProductImageFile.FileName;
+                var result = _productService.Update(product);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
+                /*
+                var result = _productService.UpdateProduct(request);
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);*/
+            }
         }
 
         //[HttpGet]

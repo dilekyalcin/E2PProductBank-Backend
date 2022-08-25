@@ -74,5 +74,37 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.ToList();
             }
         }
+
+        public bool UpdateProduct(Product request)
+        {
+            using (E2PContext context = new E2PContext())
+            {
+                try
+                {
+                    var getProduct = context.Products.Where(p => p.Id == request.Id).SingleOrDefault();
+
+                    getProduct.ProductName = request.ProductName;
+                    getProduct.ProductVendor = request.ProductVendor;
+                    getProduct.ProductDescription = request.ProductDescription;
+                    getProduct.ProductImage = request.ProductImageFile.FileName;
+                    getProduct.CategoryId = request.CategoryId;
+                    context.Products.Update(getProduct);
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public Product GetProduct(int productId)
+        {
+            using (E2PContext context = new E2PContext())
+            {
+                return context.Products.Find(productId);
+            }
+        }
     }
 }

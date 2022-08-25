@@ -86,5 +86,20 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetProducts(), "ürünler");
         }
+
+        public IResult UpdateProduct(Product request)
+        {
+            var result = _productDal.UpdateProduct(request);
+            if (result)
+            {
+                return new SuccessResult("Ürün güncellendi");
+            }
+            return new ErrorResult("Güncellemede hata var.");
+        }
+
+        public Product GetProduct(int productId)
+        {
+            return _productDal.GetProduct(productId);
+        }
     }
 }

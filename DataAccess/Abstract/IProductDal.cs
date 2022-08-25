@@ -18,5 +18,10 @@ namespace DataAccess.Abstract
         List<Product> GetProducts();
 
         bool DeleteProduct(int productId);
+
+        bool UpdateProduct(Product request);
+
+        Product GetProduct(int productId);
+
     }
 }

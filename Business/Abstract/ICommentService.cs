@@ -14,7 +14,6 @@ namespace Business.Abstract
         IDataResult<List<Comment>> GetAll();
 
         IDataResult<List<Comment>> GetByProductId(int productId);
-        IResult AddComment(int productId, int userId, Comment comment);
 
     }
 }

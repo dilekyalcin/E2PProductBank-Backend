@@ -22,16 +22,13 @@ namespace Business.Concrete
 
         public IResult Add(Comment comment)
         {
-                _commentDal.Add(comment);
+            var res = _commentDal.AddComment(comment);
+            if (res.Success)
+            {
                 return new SuccessResult(Messages.CommentAdded);
+            }
          
-            return new ErrorResult();
-        }
-
-        public IResult AddComment(int productId, int userId, Comment comment)
-        {
-            _commentDal.AddComment(productId, userId, comment);
-            return new SuccessResult( Messages.CommentAdded);
+            return new ErrorResult("Aynı ürüne birden fazla yorum yapamazsınız.");
         }
 
         public IDataResult<List<Comment>> GetAll()

@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess.EntityFramework;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -12,18 +13,28 @@ namespace DataAccess.Concrete.EntityFramework
     public class EfCommentDal : EfEntityRepositoryBase<Comment, E2PContext>, ICommentDal
     {
 
-        public void AddComment(int productId, int userId, Comment request)
+        public IResult AddComment(Comment request)
         {
             using (E2PContext context = new E2PContext())
             {
-                var comment = new Comment
+                try
                 {
-                    ProductId = productId,
-                    UserId = userId,
-                    CommentText = request.CommentText
-                };
-                context.Comments.Add(comment);
-                context.SaveChanges();
+
+
+                    var comment = new Comment
+                    {
+                        ProductId = request.ProductId,
+                        UserId = request.UserId,
+                        CommentText = request.CommentText
+                    };
+                    context.Comments.Add(comment);
+                    context.SaveChanges();
+                    return new SuccessResult("Yorum Eklendi.");
+                }
+                catch (Exception)
+                {
+                    return new ErrorResult("Aynı ürüne birden fazla yorum ekleyemezsiniz!");
+                }
             }
         }
 

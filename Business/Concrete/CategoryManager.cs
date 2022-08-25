@@ -28,7 +28,7 @@ namespace Business.Concrete
                 _categoryDal.Add(category);
                 return new SuccessResult(Messages.CategoryAdded);
             }
-            return new ErrorResult();
+            return new ErrorResult("Aynı isime sahip bir kategori vardır.");
         }
 
         public IDataResult<List<Category>> GetAll()
