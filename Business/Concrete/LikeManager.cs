@@ -35,9 +35,9 @@ namespace Business.Concrete
             //return new SuccessDataResult<List<Like>>(_likeDal.LikeProduct(like),"Ürün beğenildi");
         }
 
-        public IDataResult<List<Like>> UnlikeProduct(int productId)
+        public IDataResult<List<Like>> UnlikeProduct(Like like)
         {
-            return _likeDal.UnlikeProduct(productId);
+            return _likeDal.UnlikeProduct(like);
         }
     }
 }

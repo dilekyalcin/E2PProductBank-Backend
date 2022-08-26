@@ -16,6 +16,6 @@ namespace Business.Abstract
 
         IDataResult<List<Like>> LikeProduct(Like like);
 
-        IDataResult<List<Like>> UnlikeProduct(int productId);
+        IDataResult<List<Like>> UnlikeProduct(Like like);
     }
 }

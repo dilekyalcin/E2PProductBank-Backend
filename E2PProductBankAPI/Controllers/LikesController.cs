@@ -9,7 +9,7 @@ namespace E2PProductBankAPI.Controllers
     [ApiController]
     public class LikesController : ControllerBase
     {
-        ILikeService _likeService;
+        ILikeService _likeService;  
 
         public LikesController(ILikeService likeService)
         {
@@ -42,6 +42,17 @@ namespace E2PProductBankAPI.Controllers
         public IActionResult LikeProduct(Like like)
         {
             var result = _likeService.LikeProduct(like);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPut]
+        public IActionResult UnlikeProduct(Like like)
+        {
+            var result = _likeService.UnlikeProduct(like);
             if (result.Success)
             {
                 return Ok(result);
